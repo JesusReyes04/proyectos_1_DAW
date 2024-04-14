@@ -4,6 +4,10 @@ public class Jugador {
     private String nombre;
     private char ficha;
     private boolean turno;
+
+    public Jugador(){
+        this.turno = false;
+    }
     
     public String getNombre() {
         return nombre;
@@ -17,7 +21,7 @@ public class Jugador {
     public void setFicha(char ficha) {
         this.ficha = ficha;
     }
-    public boolean isTurno() {
+    public boolean getTurno() {
         return turno;
     }
     public void setTurno(boolean turno) {
