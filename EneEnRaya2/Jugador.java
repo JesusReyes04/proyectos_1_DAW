@@ -5,15 +5,13 @@ public class Jugador {
     private char ficha;
     private boolean turno;
 
-    public Jugador(){
+    public Jugador(String nombre){
+        this.nombre = nombre;
         this.turno = false;
     }
     
     public String getNombre() {
         return nombre;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
     public char getFicha() {
         return ficha;
