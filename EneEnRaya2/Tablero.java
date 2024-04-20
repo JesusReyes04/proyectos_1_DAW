@@ -13,7 +13,7 @@ public class Tablero {
             System.out.println("Introduce el tamaño del tablero");
             tamaño = leer.nextInt();
         } while (tamaño<3);
-        System.out.println("ツ Tablero creado con éxito ツ");
+        System.out.println("-- Tablero creado con éxito --");
         System.out.println("Has establecido el tamaño del tablero a "+tamaño);
         tablero = new char[tamaño][tamaño];
         rellenarTablero();
