@@ -26,8 +26,7 @@ public class JuegoNumAleatorio {
     public void jugar(){
         if (!terminado) {
             introducirIntento(jugadorActual());
-            verificarNumero();
-            mostrarResultado();
+            mostrarResultado(jugadorActual());
         }
     }
 
@@ -36,10 +35,27 @@ public class JuegoNumAleatorio {
         int intento;
         System.out.println(jugador.getNombre()+" introduce tu intento (entre 1 y 100)");
         intento = leer.nextInt();
+        verificarNumero(intento);
     }
 
-    private void verificarNumero(){
-        
+    private void verificarNumero(int intento){
+        if (intento == this.numParaAdivinar) {
+            this.terminado=true;
+        }else{
+            if (intento<this.numParaAdivinar) {
+                System.out.println("pon uno más grande");
+            } else {
+                System.out.println("pon uno más pequeño");
+            }
+        }
+    }
+
+    private void mostrarResultado(Jugador jugador){
+        if (this.terminado) {
+            System.out.println(jugador.getNombre()+" ha ganado, el número era "+this.numParaAdivinar);
+        }else{
+            System.out.println("sigue intentándolo");
+        }
     }
 
     private void establecerNumero(){
