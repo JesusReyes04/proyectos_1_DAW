@@ -1,4 +1,4 @@
-package POO.EneEnRaya2;
+package EneEnRaya2;
 
 import java.util.Scanner;
 

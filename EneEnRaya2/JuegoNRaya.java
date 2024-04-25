@@ -1,8 +1,8 @@
-package POO.EneEnRaya2;
+package EneEnRaya2;
 
 import java.util.Scanner;
 
-public class JuegoNRaya{
+public class JuegoNRaya extends Juego{
 
     private Jugador[] jugadores;
     private boolean terminado;

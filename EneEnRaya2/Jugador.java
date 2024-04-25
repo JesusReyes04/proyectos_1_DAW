@@ -1,10 +1,10 @@
-package POO.EneEnRaya2;
+package EneEnRaya2;
 
 public class Jugador {
     private String nombre;
     private char ficha;
     private boolean turno;
-
+    
     public Jugador(String nombre){
         this.nombre = nombre;
         this.turno = false;

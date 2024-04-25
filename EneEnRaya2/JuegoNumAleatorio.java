@@ -1,12 +1,10 @@
-package POO.EneEnRaya2;
+package EneEnRaya2;
 
 import java.util.Scanner;
 
-import POO.EneEnRaya2.Jugador;
-
 import java.util.Random;
 
-public class JuegoNumAleatorio {
+public class JuegoNumAleatorio extends Juego{
     private Jugador[] jugadores;
     private boolean terminado;
     private int numParaAdivinar;
