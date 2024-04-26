@@ -1,7 +1,41 @@
 package EneEnRaya2;
 import java.util.Scanner;
-public abstract class Juego {
-    private Juego[] juegos;
+public class Juego {
+    private JuegoNRaya[] juegos;
+
+    public Juego(){
+        inicializarJuegos();
+    }
+
+    private void inicializarJuegos() {
+        introducirCantidadDeJuegos();
+        jugarJuegos();
+    }
+
+    private boolean verificarTerminadoTodosTableros(){
+        boolean seguir=true;
+        for (int i = 0; i < juegos.length; i++) {
+            if (juegos[i].getTerminado()) {
+                seguir=false;
+            }
+        }
+        return seguir;
+    }
+
+    private void jugarJuegos() {
+        while (verificarTerminadoTodosTableros()) {
+            for (int i = 0; i < juegos.length; i++) {
+                if(!juegos[i].getTerminado()){
+                    juegos[i].jugar();
+                }
+            }
+            for(int i = 0; i < juegos.length; i++){
+                if(!juegos[i].getTerminado()){
+                    juegos[i].cambiarTurnoJugador();
+                }
+            }
+        }
+    }
 
     private void introducirCantidadDeJuegos(){
         int cantidadJuegos;
@@ -11,24 +45,9 @@ public abstract class Juego {
             cantidadJuegos = leer.nextInt();
         } while (cantidadJuegos<1);
         System.out.println("Ok se van a jugar a "+cantidadJuegos+" juegos");
-        juegos = new Juego[cantidadJuegos];
-    }
-
-    private void determinarTipoJuego(){
-        Scanner leer = new Scanner (System.in);
-        System.out.println("Hay 2 opciones,\n1. Jugar al 'N en Raya'(opción 1)\n2. Adivinar un número que irá del 1 al 100(opción 2)");
-        System.out.println("Elige '1' para jugar al 'N en Raya' o '2' para adivinar un número");
+        juegos = new JuegoNRaya[cantidadJuegos];
         for (int i = 0; i < juegos.length; i++) {
-            int eleccion;
-            do {
-                System.out.println("El juego "+(i+1)+": "+ "¿Quieres que sea 'N en Raya' o Adivinar el número?");
-                eleccion = leer.nextInt();
-            } while (eleccion<1||eleccion>2);
-            if (eleccion == 1) {
-                juegos[i] = new JuegoNRaya();
-            } else {
-                juegos[i] = new JuegoNumAleatorio();
-            }
+            juegos[i] = new JuegoNRaya();
         }
     }
 }

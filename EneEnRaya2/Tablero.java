@@ -50,6 +50,7 @@ public class Tablero {
     }
     
     public void mostrarTablero(){
+        System.out.println("\n\n");
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
                 if (j<tablero.length-1) {
@@ -65,6 +66,7 @@ public class Tablero {
     public boolean verificarGanador(Jugador jugador) {
         if (verificarFilas(jugador) || verificarColumnas(jugador) || verificarDiagonal(jugador) || verificarDiagonalInversa(jugador)) {
             System.out.println("Has ganado " + jugador.getNombre() + " SIUUUUUUUUU");
+            
             return true;
         } else {
             if (fichasColocadas == (tablero.length * tablero.length)) {

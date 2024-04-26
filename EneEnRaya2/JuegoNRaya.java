@@ -2,7 +2,7 @@ package EneEnRaya2;
 
 import java.util.Scanner;
 
-public class JuegoNRaya extends Juego{
+public class JuegoNRaya{
 
     private Jugador[] jugadores;
     private boolean terminado;
@@ -19,15 +19,16 @@ public class JuegoNRaya extends Juego{
         selecionarPrimerJugador();
         tablero = new Tablero();
         tablero.crearTablero();
-        tablero.mostrarTablero();
     }
     
     public void jugar(){
-        while(!terminado){
+        if(!terminado){
+            tablero.mostrarTablero();
             tablero.colocarFicha(jugadorActual());
             tablero.mostrarTablero();
-            tablero.verificarGanador(jugadorActual());
-            cambiarTurnoJugador();
+            if(tablero.verificarGanador(jugadorActual())){
+                this.terminado=true;
+            }
         }
     }
 
@@ -79,5 +80,9 @@ public class JuegoNRaya extends Juego{
         }else{
             return jugadores[1];
         }
+    }
+
+    public boolean getTerminado() {
+        return terminado;
     }
 }
