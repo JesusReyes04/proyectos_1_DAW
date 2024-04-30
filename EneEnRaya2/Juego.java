@@ -13,10 +13,10 @@ public class Juego {
     }
 
     private boolean verificarTerminadoTodosTableros(){
-        boolean seguir=true;
-        for (int i = 0; i < juegos.length; i++) {
-            if (juegos[i].getTerminado()) {
-                seguir=false;
+        boolean seguir=false;
+        for (int i = 0; i < juegos.length&&!seguir; i++) {
+            if (!juegos[i].getTerminado()) {
+                seguir=true;
             }
         }
         return seguir;
