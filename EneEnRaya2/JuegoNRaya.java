@@ -2,17 +2,17 @@ package EneEnRaya2;
 
 import java.util.Scanner;
 
-public class JuegoNRaya{
+public class JuegoNRaya extends Juego{
 
-    private Jugador[] jugadores;
     private boolean terminado;
     private Tablero tablero;
     
     public JuegoNRaya(){
-        inicializarJuego();
+        inicializarVariables();
     }
 
-    public void inicializarJuego(){
+    @Override
+    protected void inicializarVariables(){
         this.jugadores = new Jugador[2];
         this.terminado = false;
         crearJugadores();
@@ -21,7 +21,8 @@ public class JuegoNRaya{
         tablero.crearTablero();
     }
     
-    public void jugar(){
+    @Override
+    protected void jugar(){
         if(!terminado){
             tablero.mostrarTablero();
             tablero.colocarFicha(jugadorActual());
@@ -42,7 +43,8 @@ public class JuegoNRaya{
         }
     }
 
-    public void selecionarPrimerJugador(){
+    @Override
+    protected void selecionarPrimerJugador(){
         Scanner leer = new Scanner(System.in);
         String nombreDelJugador1;
         do{
@@ -58,7 +60,8 @@ public class JuegoNRaya{
         System.out.println("\nEntonces el primero es " + jugadorActual().getNombre());
     }
 
-    public void crearJugadores(){
+    @Override
+    protected void crearJugadores(){
         Scanner leer = new Scanner(System.in);
         for (int i = 0; i < jugadores.length; i++) {
             System.out.println("Introduce tu nombre: ");
@@ -82,7 +85,10 @@ public class JuegoNRaya{
         }
     }
 
-    public boolean getTerminado() {
+
+    @Override
+    protected boolean getTerminado() {
         return terminado;
     }
+
 }

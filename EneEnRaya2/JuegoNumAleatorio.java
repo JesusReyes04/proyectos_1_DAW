@@ -5,7 +5,6 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class JuegoNumAleatorio extends Juego{
-    private Jugador[] jugadores;
     private boolean terminado;
     private int numParaAdivinar;
 
@@ -13,7 +12,8 @@ public class JuegoNumAleatorio extends Juego{
         inicializarVariables();
     }
 
-    private void inicializarVariables() {
+    @Override
+    protected void inicializarVariables() {
         this.jugadores = new Jugador[2];
         this.terminado = false;
         establecerNumero();
@@ -21,7 +21,8 @@ public class JuegoNumAleatorio extends Juego{
         selecionarPrimerJugador();
     }
 
-    public void jugar(){
+    @Override
+    protected void jugar(){
         if (!terminado) {
             introducirIntento(jugadorActual());
             mostrarResultado(jugadorActual());
@@ -61,7 +62,8 @@ public class JuegoNumAleatorio extends Juego{
         this.numParaAdivinar = random.nextInt(100) + 1;
     }
 
-    private void crearJugadores() {
+    @Override
+    protected void crearJugadores() {
         Scanner leer = new Scanner(System.in);
         for (int i = 0; i < jugadores.length; i++) {
             System.out.println("Introduce tu nombre");
@@ -70,7 +72,8 @@ public class JuegoNumAleatorio extends Juego{
         }
     }
 
-    public void selecionarPrimerJugador() {
+    @Override
+    protected void selecionarPrimerJugador() {
         Scanner leer = new Scanner(System.in);
         String nombreDelJugador1;
         do {
@@ -85,6 +88,7 @@ public class JuegoNumAleatorio extends Juego{
         }
         System.out.println("\nEntonces el primero es " + jugadorActual().getNombre());
     }
+
 
     private Jugador jugadorActual(){
         if (jugadores[0].getTurno()) {
@@ -102,5 +106,10 @@ public class JuegoNumAleatorio extends Juego{
             jugadores[0].setTurno(true);
             jugadores[1].setTurno(false);
         }
+    }
+
+    @Override
+    protected boolean getTerminado() {
+        return terminado;
     }
 }
