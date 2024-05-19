@@ -1,24 +1,16 @@
 package EneEnRaya2;
-
-import java.util.Scanner;
-
-public class JuegoNRaya extends Juego{
+public class JuegoNRaya extends JuegoAbstacto{
 
     private boolean terminado;
     private Tablero tablero;
     
-    public JuegoNRaya(){
-        inicializarVariables();
-    }
-
-    @Override
-    protected void inicializarVariables(){
-        this.jugadores = new Jugador[2];
+    public JuegoNRaya(Tablero tablero,Jugador[] jugadores) {
+        this.tablero = tablero;
         this.terminado = false;
-        crearJugadores();
-        selecionarPrimerJugador();
-        tablero = new Tablero();
+        this.jugadores = jugadores;
         tablero.crearTablero();
+        mostrarJugadores();
+        primerJugador();
     }
     
     @Override
@@ -26,12 +18,14 @@ public class JuegoNRaya extends Juego{
         if(!terminado){
             tablero.mostrarTablero();
             tablero.colocarFicha(jugadorActual());
+            System.out.println("Así ha quedado el tablero:");
             tablero.mostrarTablero();
             if(tablero.verificarGanador(jugadorActual())){
                 this.terminado=true;
             }
         }
     }
+
 
     public void cambiarTurnoJugador(){
         if(jugadores[0].getTurno()){
@@ -44,36 +38,10 @@ public class JuegoNRaya extends Juego{
     }
 
     @Override
-    protected void selecionarPrimerJugador(){
-        Scanner leer = new Scanner(System.in);
-        String nombreDelJugador1;
-        do{
-            System.out.println("¿Quién va a ser el jugador 1?");
-            System.out.print(jugadores[0].getNombre()+" o "+jugadores[1].getNombre() + " ");
-            nombreDelJugador1 = leer.nextLine();
-        }while(!nombreDelJugador1.equals(jugadores[0].getNombre())&&!nombreDelJugador1.equals(jugadores[1].getNombre()));
-        if (nombreDelJugador1.equals(jugadores[0].getNombre())) {
-            jugadores[0].setTurno(true);
-        } else {
-            jugadores[1].setTurno(true);
-        }
-        System.out.println("\nEntonces el primero es " + jugadorActual().getNombre());
-    }
-
-    @Override
-    protected void crearJugadores(){
-        Scanner leer = new Scanner(System.in);
+    protected void mostrarJugadores(){
+        System.out.println("Jugadores");
         for (int i = 0; i < jugadores.length; i++) {
-            System.out.println("Introduce tu nombre: ");
-            String nombre = leer.nextLine();
-            System.out.println("Introduce la ficha con la que vas a jugar");
-            char ficha = leer.nextLine().charAt(0);
-            jugadores[i] = new Jugador(nombre);
-            jugadores[i].setFicha(ficha);
-            System.out.println("Ok " + jugadores[i].getNombre()+" vas a jugar con "+jugadores[i].getFicha());
-            if (i<jugadores.length-1) {
-                System.out.println("Que pase el siguiente jugador a introducir sus datos");
-            }
+            System.out.println(jugadores[i].getNombre());
         }
     }
 
@@ -89,6 +57,12 @@ public class JuegoNRaya extends Juego{
     @Override
     protected boolean getTerminado() {
         return terminado;
+    }
+
+
+    @Override
+    protected void primerJugador() {
+        System.out.println((jugadores[0].getTurno())?"primer jugador: "+jugadores[0].getNombre():"primer jugador: "+jugadores[1].getNombre());
     }
 
 }

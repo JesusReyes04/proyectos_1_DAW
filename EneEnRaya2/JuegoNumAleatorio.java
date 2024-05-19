@@ -1,24 +1,17 @@
 package EneEnRaya2;
-
+import java.util.Random;
 import java.util.Scanner;
 
-import java.util.Random;
-
-public class JuegoNumAleatorio extends Juego{
+public class JuegoNumAleatorio extends JuegoAbstacto{
     private boolean terminado;
     private int numParaAdivinar;
 
-    public JuegoNumAleatorio() {
-        inicializarVariables();
-    }
-
-    @Override
-    protected void inicializarVariables() {
-        this.jugadores = new Jugador[2];
+    public JuegoNumAleatorio(Jugador[] jugadores){
+        this.jugadores = jugadores;
         this.terminado = false;
         establecerNumero();
-        crearJugadores();
-        selecionarPrimerJugador();
+        mostrarJugadores();
+        primerJugador();
     }
 
     @Override
@@ -63,32 +56,12 @@ public class JuegoNumAleatorio extends Juego{
     }
 
     @Override
-    protected void crearJugadores() {
-        Scanner leer = new Scanner(System.in);
+    protected void mostrarJugadores(){
+        System.out.println("Jugadores");
         for (int i = 0; i < jugadores.length; i++) {
-            System.out.println("Introduce tu nombre");
-            String nombre = leer.nextLine();
-            jugadores[i] = new Jugador(nombre);
+            System.out.println(jugadores[i].getNombre());
         }
     }
-
-    @Override
-    protected void selecionarPrimerJugador() {
-        Scanner leer = new Scanner(System.in);
-        String nombreDelJugador1;
-        do {
-            System.out.println("¿Quién va a ser el jugador 1?");
-            System.out.print(jugadores[0].getNombre() + " o " + jugadores[1].getNombre() + " ");
-            nombreDelJugador1 = leer.nextLine();
-        } while (!nombreDelJugador1.equals(jugadores[0].getNombre()) && !nombreDelJugador1.equals(jugadores[1].getNombre()));
-        if (nombreDelJugador1.equals(jugadores[0].getNombre())) {
-            jugadores[0].setTurno(true);
-        } else {
-            jugadores[1].setTurno(true);
-        }
-        System.out.println("\nEntonces el primero es " + jugadorActual().getNombre());
-    }
-
 
     private Jugador jugadorActual(){
         if (jugadores[0].getTurno()) {
@@ -97,7 +70,7 @@ public class JuegoNumAleatorio extends Juego{
             return jugadores[1];
         }
     }
-
+    
     public void cambiarTurnoJugador(){
         if(jugadores[0].getTurno()){
             jugadores[0].setTurno(false);
@@ -106,6 +79,11 @@ public class JuegoNumAleatorio extends Juego{
             jugadores[0].setTurno(true);
             jugadores[1].setTurno(false);
         }
+    }
+
+    @Override
+    protected void primerJugador() {
+        System.out.println((jugadores[0].getTurno())?"primer jugador: "+jugadores[0].getNombre():"primer jugador: "+jugadores[1].getNombre());
     }
 
     @Override

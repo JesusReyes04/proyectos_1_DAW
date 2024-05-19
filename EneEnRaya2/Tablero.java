@@ -1,139 +1,143 @@
 package EneEnRaya2;
-
+import javax.xml.bind.annotation.*;
 import java.util.Scanner;
 
+@XmlRootElement(name = "tablero")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Tablero {
-    private char[][] tablero;
+    @XmlElement(name = "size")
+    private int tamañoTablero;
+
+    @XmlTransient
     private int fichasColocadas;
 
-    public void crearTablero(){
-        Scanner leer = new Scanner(System.in);
-        int tamaño;
-        do {
-            System.out.println("Introduce el tamaño del tablero");
-            tamaño = leer.nextInt();
-        } while (tamaño<3);
-        System.out.println("-- Tablero creado con éxito --");
-        System.out.println("Has establecido el tamaño del tablero a "+tamaño);
-        tablero = new char[tamaño][tamaño];
+    @XmlTransient
+    private String[][] arrayTablero;
+    
+    public Tablero(){
+        crearTablero();
+    }
+
+
+    public void setTamañoTablero(int tamañoTablero) {
+        this.tamañoTablero = tamañoTablero;
+    }
+
+    public void crearTablero() {
+        arrayTablero = new String[tamañoTablero][tamañoTablero];
         rellenarTablero();
     }
 
     private void rellenarTablero() {
-        for (int i = 0; i < tablero.length; i++) {
-            for(int j = 0; j<tablero[i].length; j++){
-                tablero[i][j]='*';
+        for (int i = 0; i < arrayTablero.length; i++) {
+            for (int j = 0; j < arrayTablero[i].length; j++) {
+                arrayTablero[i][j] = "*";
             }
         }
     }
 
-    public void colocarFicha(Jugador jugador){
+    public void colocarFicha(Jugador jugador) {
         int coordenadaFila;
         int coordenadaColumna;
-        System.out.println("Te toca "+jugador.getNombre());
+        Scanner leer = new Scanner(System.in);
+        System.out.println("Te toca " + jugador.getNombre());
         do {
-            coordenadaFila=introducirCoordenada("fila");
-            coordenadaColumna=introducirCoordenada("columna");
-        } while (tablero[coordenadaFila][coordenadaColumna]!='*');
-        tablero[coordenadaFila][coordenadaColumna]=jugador.getFicha();
+            coordenadaFila = introducirCoordenada("fila", leer);
+            coordenadaColumna = introducirCoordenada("columna", leer);
+        } while (!arrayTablero[coordenadaFila][coordenadaColumna].equals("*"));
+        arrayTablero[coordenadaFila][coordenadaColumna] = jugador.getFicha();
         fichasColocadas++;
     }
 
-    private int introducirCoordenada(String string){
-        Scanner leer = new Scanner(System.in);
+    private int introducirCoordenada(String string, Scanner leer) {
         int coordenada;
-        do{
-            System.out.println("Introduce la coordenada de la "+string+" (entre 1 y "+tablero.length+")");
-            coordenada=leer.nextInt();
-        }while(coordenada<1||coordenada>tablero.length);
-        return coordenada-1;
+        do {
+            System.out.println("Introduce la coordenada de la " + string + " (entre 1 y " + arrayTablero.length + ")");
+            coordenada = leer.nextInt();
+        } while (coordenada < 1 || coordenada > arrayTablero.length);
+        return coordenada - 1;
     }
-    
-    public void mostrarTablero(){
-        System.out.println("\n\n");
-        for (int i = 0; i < tablero.length; i++) {
-            for (int j = 0; j < tablero[i].length; j++) {
-                if (j<tablero.length-1) {
-                    System.out.print("|"+(char)tablero[i][j]);
-                }else{
-                    System.out.print("|"+(char)tablero[i][j]+"|");
+
+    public void mostrarTablero() {
+        for (int i = 0; i < arrayTablero.length; i++) {
+            for (int j = 0; j < arrayTablero[i].length; j++) {
+                if (j < arrayTablero.length - 1) {
+                    System.out.print("|" + arrayTablero[i][j]);
+                } else {
+                    System.out.print("|" + arrayTablero[i][j] + "|");
                 }
             }
             System.out.println("");
         }
+        System.out.println("\n");
     }
 
     public boolean verificarGanador(Jugador jugador) {
-        if (verificarFilas(jugador) || verificarColumnas(jugador) || verificarDiagonal(jugador) || verificarDiagonalInversa(jugador)) {
+        if (verificarFilas(jugador) || verificarColumnas(jugador) || verificarDiagonal(jugador)
+                || verificarDiagonalInversa(jugador)) {
             System.out.println("Has ganado " + jugador.getNombre() + " SIUUUUUUUUU");
-            
             return true;
         } else {
-            if (fichasColocadas == (tablero.length * tablero.length)) {
+            if (fichasColocadas == (arrayTablero.length * arrayTablero.length)) {
                 System.out.println("No hay ganador chavales, es un empate");
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
     }
 
-    
     private boolean verificarDiagonal(Jugador jugador) {
-        int contadorDiagonal=0;
-        
-        for (int i = 0; i < tablero.length; i++) {
-            if (tablero[i][i]==jugador.getFicha()) {
+        int contadorDiagonal = 0;
+        for (int i = 0; i < arrayTablero.length; i++) {
+            if (arrayTablero[i][i].equals(jugador.getFicha())) {
                 contadorDiagonal++;
             }
         }
-
-        return (contadorDiagonal == tablero.length) ? true : false ;
+        return contadorDiagonal == arrayTablero.length;
     }
 
     private boolean verificarDiagonalInversa(Jugador jugador) {
-        int contadorDiagonalInversa=0;
-        
-        for (int i = 0; i < tablero.length; i++) {
-            if (tablero[i][tablero.length-1-i]==jugador.getFicha()) {
+        int contadorDiagonalInversa = 0;
+        for (int i = 0; i < arrayTablero.length; i++) {
+            if (arrayTablero[i][arrayTablero.length - 1 - i].equals(jugador.getFicha())) {
                 contadorDiagonalInversa++;
             }
         }
-
-        return (contadorDiagonalInversa == tablero.length) ? true : false ;
+        return contadorDiagonalInversa == arrayTablero.length;
     }
 
     private boolean verificarColumnas(Jugador jugador) {
-        for (int i = 0; i < tablero.length; i++) {
-            int contador=0;
-            for (int j = 0; j < tablero.length; j++) {
-                if (tablero[j][i]==jugador.getFicha()) {
+        for (int i = 0; i < arrayTablero.length; i++) {
+            int contador = 0;
+            for (int j = 0; j < arrayTablero.length; j++) {
+                if (arrayTablero[j][i].equals(jugador.getFicha())) {
                     contador++;
                 }
             }
-            if (contador==tablero.length) {
+            if (contador == arrayTablero.length) {
                 return true;
-            }else{
-                contador=0;
             }
         }
         return false;
     }
 
     private boolean verificarFilas(Jugador jugador) {
-        for (int i = 0; i < tablero.length; i++) {
-            int contador=0;
-            for (int j = 0; j < tablero.length; j++) {
-                if (tablero[i][j]==jugador.getFicha()) {
+        for (int i = 0; i < arrayTablero.length; i++) {
+            int contador = 0;
+            for (int j = 0; j < arrayTablero.length; j++) {
+                if (arrayTablero[i][j].equals(jugador.getFicha())) {
                     contador++;
                 }
             }
-            if (contador==tablero.length) {
+            if (contador == arrayTablero.length) {
                 return true;
-            }else{
-                contador=0;
             }
         }
         return false;
+    }
+
+    public int getTamañoTablero() {
+        return arrayTablero.length;
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<juegos>
+    <juego>
+        <tipo>NRaya</tipo>
+        <tablero>
+            <size>3</size>
+        </tablero>
+        <jugadores>
+            <jugador>
+                <nombre>Jesus</nombre>
+                <ficha>J</ficha>
+                <turno>true</turno>
+            </jugador>
+            <jugador>
+                <nombre>Fernando</nombre>
+                <ficha>F</ficha>
+                <turno>false</turno>
+            </jugador>
+        </jugadores>
+    </juego>
+    <juego>
+        <tipo>NumAleatorio</tipo>
+        <jugadores>
+            <jugador>
+                <nombre>Jesus2</nombre>
+                <turno>true</turno>
+            </jugador>
+            <jugador>
+                <nombre>Antonio</nombre>
+                <turno>false</turno>
+            </jugador>
+        </jugadores>
+    </juego>
+    <juego>
+        <tipo>NumAleatorio</tipo>
+        <jugadores>
+            <jugador>
+                <nombre>Jesus3</nombre>
+                <turno>true</turno>
+            </jugador>
+            <jugador>
+                <nombre>Antonio2</nombre>
+                <turno>false</turno>
+            </jugador>
+        </jugadores>
+    </juego>
+</juegos>
